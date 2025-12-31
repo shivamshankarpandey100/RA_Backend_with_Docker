@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/RA_AuthService" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/RA_CatalogService" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/RA_Permission" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/RA_VideoIngestionService" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/RA_userService" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Saanvitechs-RA_subscriptionAPI" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/api_gateway" vcs="Git" />
+  </component>
+</project>

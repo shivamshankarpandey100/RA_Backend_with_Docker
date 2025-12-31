@@ -1,0 +1,44 @@
+# ========================================
+# reelApp - Environment Configuration
+# ========================================
+
+# ========================================
+# DATABASE CONFIGURATION
+# ========================================
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=root
+
+# Database Names
+GATEWAY_DB_NAME=api_gateway
+CATALOG_DB_NAME=newcatalog
+VIDEO_DB_NAME=video_ingestion
+SUBSCRIPTION_DB_NAME=subscripption
+
+# ========================================
+# SERVICE PORTS
+# ========================================
+GATEWAY_PORT=3000
+CATALOG_PORT=8081
+VIDEO_PORT=8087
+SUBSCRIPTION_PORT=8085
+
+# ========================================
+# JWT AUTHENTICATION
+# ========================================
+JWT_SECRET=your-secret-key-change-this-in-production-make-it-long-and-secure
+JWT_EXPIRATION=86400000
+
+# ========================================
+# SERVICE URLS (Internal Docker Network)
+# ========================================
+CATALOG_SERVICE_URL=http://catalog-service:8081
+VIDEO_SERVICE_URL=http://video-service:8087
+SUBSCRIPTION_SERVICE_URL=http://subscription-service:8085
+USER_SERVICE_URL=http://user-service:8089
+STREAMING_SERVICE_URL=http://streaming-service:8082
+DASHBOARD_SERVICE_URL=http://dashboard-service:8084
+
+# ========================================
+# APPLICATION CONFIGURATION
+# ========================================
+SHOW_SQL=false

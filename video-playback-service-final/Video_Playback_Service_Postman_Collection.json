@@ -1,0 +1,1023 @@
+{
+	"info": {
+		"_postman_id": "video-playback-service-collection",
+		"name": "Video Playback Service - Complete API Collection",
+		"description": "Complete Postman collection for testing Video Playback Service with Catalog Integration",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8082",
+			"type": "string"
+		},
+		{
+			"key": "sessionId",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Catalog Integration",
+			"item": [
+				{
+					"name": "Categories",
+					"item": [
+						{
+							"name": "Get All Categories",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/categories",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"categories"
+									]
+								},
+								"description": "Retrieves all available categories from the catalog service"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Category by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/categories/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"categories",
+										"1"
+									]
+								},
+								"description": "Fetch a specific category by its ID"
+							},
+							"response": []
+						}
+					],
+					"description": "Category management endpoints"
+				},
+				{
+					"name": "Content",
+					"item": [
+						{
+							"name": "Get Content by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/content/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"content",
+										"1"
+									]
+								},
+								"description": "Fetch complete video content metadata including all language variants"
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Published Content",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/content?page=0&size=20&sortBy=createdAt&sortDir=DESC",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"content"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "20"
+										},
+										{
+											"key": "sortBy",
+											"value": "createdAt"
+										},
+										{
+											"key": "sortDir",
+											"value": "DESC"
+										}
+									]
+								},
+								"description": "Browse all published content with pagination"
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Content by Type - SERIES",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/content?type=SERIES&page=0&size=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"content"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "SERIES"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								},
+								"description": "Get only SERIES type content"
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Content by Type - REEL",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/content?type=REEL&page=0&size=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"content"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "REEL"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								},
+								"description": "Get only REEL type content (short videos)"
+							},
+							"response": []
+						},
+						{
+							"name": "Filter Content by Category",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/content?categoryId=1&page=0&size=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"content"
+									],
+									"query": [
+										{
+											"key": "categoryId",
+											"value": "1"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								},
+								"description": "Get content filtered by specific category ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Search Content by Title",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/content?search=adventure&page=0&size=10",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"content"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "adventure"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										}
+									]
+								},
+								"description": "Search content by title keyword"
+							},
+							"response": []
+						},
+						{
+							"name": "Combined Filters - SERIES + Category + Search",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/content?type=SERIES&categoryId=1&search=action&page=0&size=10&sortBy=title&sortDir=ASC",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"content"
+									],
+									"query": [
+										{
+											"key": "type",
+											"value": "SERIES"
+										},
+										{
+											"key": "categoryId",
+											"value": "1"
+										},
+										{
+											"key": "search",
+											"value": "action"
+										},
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "size",
+											"value": "10"
+										},
+										{
+											"key": "sortBy",
+											"value": "title"
+										},
+										{
+											"key": "sortDir",
+											"value": "ASC"
+										}
+									]
+								},
+								"description": "Advanced filtering with multiple criteria"
+							},
+							"response": []
+						}
+					],
+					"description": "Content browsing and discovery endpoints"
+				},
+				{
+					"name": "Carousel (Featured Content)",
+					"item": [
+						{
+							"name": "Get All Carousel Items",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/carousel",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"carousel"
+									]
+								},
+								"description": "Get all featured content carousel items for homepage display"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Carousel Item by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/carousel/1",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"carousel",
+										"1"
+									]
+								},
+								"description": "Fetch a specific carousel item by ID"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Carousel Overview/Statistics",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/catalog/carousel/overview",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"catalog",
+										"carousel",
+										"overview"
+									]
+								},
+								"description": "Get carousel statistics (total items, active items, series count, reel count)"
+							},
+							"response": []
+						}
+					],
+					"description": "Featured content carousel endpoints"
+				}
+			],
+			"description": "Catalog service integration endpoints - browse categories, content, and featured items"
+		},
+		{
+			"name": "Video Playback",
+			"item": [
+				{
+					"name": "Get All Videos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/videos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"videos"
+							]
+						},
+						"description": "Retrieves all videos stored in the local playback service database"
+					},
+					"response": []
+				},
+				{
+					"name": "Stream Video - Full Content",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/stream/video1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"video1"
+							]
+						},
+						"description": "Streams the entire video file. Use 'Send and Download' in Postman to save the video."
+					},
+					"response": []
+				},
+				{
+					"name": "Stream Video - Range Request (First 1MB)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Range",
+								"value": "bytes=0-1048575",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/stream/video1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"video1"
+							]
+						},
+						"description": "Streams first 1MB of video using HTTP range request (for seeking/resuming)"
+					},
+					"response": []
+				},
+				{
+					"name": "Stream Video - Range Request (Custom)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Range",
+								"value": "bytes=1048576-",
+								"type": "text",
+								"description": "From 1MB to end of file"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/stream/video1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"video1"
+							]
+						},
+						"description": "Streams video from specific byte position to end"
+					},
+					"response": []
+				}
+			],
+			"description": "Video streaming endpoints with range request support"
+		},
+		{
+			"name": "Playback Sessions",
+			"item": [
+				{
+					"name": "Start Playback Session",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Auto-save sessionId to collection variable",
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"sessionId\", jsonData.sessionId);",
+									"    console.log(\"Session ID saved: \" + jsonData.sessionId);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"user123\",\n  \"videoId\": \"video1\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/playback/start",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"playback",
+								"start"
+							]
+						},
+						"description": "Initiates a new playback session. Returns sessionId which is auto-saved to collection variable."
+					},
+					"response": []
+				},
+				{
+					"name": "Send Heartbeat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/playback/heartbeat/{{sessionId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"playback",
+								"heartbeat",
+								"{{sessionId}}"
+							]
+						},
+						"description": "Updates the last heartbeat timestamp to keep session alive. Uses saved sessionId from previous request."
+					},
+					"response": []
+				},
+				{
+					"name": "Stop Playback Session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/playback/stop/{{sessionId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"playback",
+								"stop",
+								"{{sessionId}}"
+							]
+						},
+						"description": "Marks a playback session as inactive. Uses saved sessionId from previous request."
+					},
+					"response": []
+				}
+			],
+			"description": "Playback session management endpoints"
+		},
+		{
+			"name": "Watch Progress",
+			"item": [
+				{
+					"name": "Update Watch Progress",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"user123\",\n  \"videoId\": \"video1\",\n  \"watchedSeconds\": 45,\n  \"totalSeconds\": 120\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/progress/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"progress",
+								"update"
+							]
+						},
+						"description": "Updates or creates watch progress for a user's video. If progress exists, it will be updated."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Progress - 25% Watched",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"user123\",\n  \"videoId\": \"video1\",\n  \"watchedSeconds\": 30,\n  \"totalSeconds\": 120\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/progress/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"progress",
+								"update"
+							]
+						},
+						"description": "Update progress to 25% (30 seconds of 120)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Progress - 50% Watched",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"user123\",\n  \"videoId\": \"video1\",\n  \"watchedSeconds\": 60,\n  \"totalSeconds\": 120\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/progress/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"progress",
+								"update"
+							]
+						},
+						"description": "Update progress to 50% (60 seconds of 120)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Progress - 100% Watched (Completed)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"user123\",\n  \"videoId\": \"video1\",\n  \"watchedSeconds\": 120,\n  \"totalSeconds\": 120\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/progress/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"progress",
+								"update"
+							]
+						},
+						"description": "Update progress to 100% - marks video as completed"
+					},
+					"response": []
+				}
+			],
+			"description": "Watch progress tracking endpoints"
+		},
+		{
+			"name": "Health & Status",
+			"item": [
+				{
+					"name": "Service Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						},
+						"description": "Check if the video playback service is healthy and running"
+					},
+					"response": []
+				},
+				{
+					"name": "Service Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actuator/info",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actuator",
+								"info"
+							]
+						},
+						"description": "Get service information and metadata"
+					},
+					"response": []
+				}
+			],
+			"description": "Health check and service status endpoints"
+		},
+		{
+			"name": "Complete User Journey",
+			"item": [
+				{
+					"name": "1. Browse Featured Content (Carousel)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/catalog/carousel",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"carousel"
+							]
+						},
+						"description": "Step 1: User opens app and sees featured content carousel"
+					},
+					"response": []
+				},
+				{
+					"name": "2. Browse Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/catalog/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"categories"
+							]
+						},
+						"description": "Step 2: User browses available content categories"
+					},
+					"response": []
+				},
+				{
+					"name": "3. Browse Content by Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/catalog/content?categoryId=1&page=0&size=10",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"content"
+							],
+							"query": [
+								{
+									"key": "categoryId",
+									"value": "1"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Step 3: User filters content by selecting a category"
+					},
+					"response": []
+				},
+				{
+					"name": "4. Get Content Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/catalog/content/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"catalog",
+								"content",
+								"1"
+							]
+						},
+						"description": "Step 4: User selects a video and views full details with all language variants"
+					},
+					"response": []
+				},
+				{
+					"name": "5. Start Playback Session",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"sessionId\", jsonData.sessionId);",
+									"    console.log(\"Session started: \" + jsonData.sessionId);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"user123\",\n  \"videoId\": \"video1\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/playback/start",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"playback",
+								"start"
+							]
+						},
+						"description": "Step 5: User clicks 'Play' - session starts"
+					},
+					"response": []
+				},
+				{
+					"name": "6. Stream Video (First Chunk)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Range",
+								"value": "bytes=0-10485759",
+								"type": "text",
+								"description": "First 10MB"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/stream/video1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"stream",
+								"video1"
+							]
+						},
+						"description": "Step 6: Video player requests first 10MB of video data"
+					},
+					"response": []
+				},
+				{
+					"name": "7. Update Progress (30 seconds)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"user123\",\n  \"videoId\": \"video1\",\n  \"watchedSeconds\": 30,\n  \"totalSeconds\": 120\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/progress/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"progress",
+								"update"
+							]
+						},
+						"description": "Step 7: User has watched 30 seconds - progress saved"
+					},
+					"response": []
+				},
+				{
+					"name": "8. Send Heartbeat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/playback/heartbeat/{{sessionId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"playback",
+								"heartbeat",
+								"{{sessionId}}"
+							]
+						},
+						"description": "Step 8: Keep session alive with heartbeat"
+					},
+					"response": []
+				},
+				{
+					"name": "9. Update Progress (60 seconds)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"user123\",\n  \"videoId\": \"video1\",\n  \"watchedSeconds\": 60,\n  \"totalSeconds\": 120\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/progress/update",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"progress",
+								"update"
+							]
+						},
+						"description": "Step 9: User has watched 60 seconds (50%) - progress updated"
+					},
+					"response": []
+				},
+				{
+					"name": "10. Stop Playback Session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/playback/stop/{{sessionId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"playback",
+								"stop",
+								"{{sessionId}}"
+							]
+						},
+						"description": "Step 10: User stops watching - session ends"
+					},
+					"response": []
+				}
+			],
+			"description": "Complete end-to-end user journey from browsing to watching a video. Run these requests in order to simulate a real user flow."
+		}
+	]
+}

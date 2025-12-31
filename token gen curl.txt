@@ -1,0 +1,15 @@
+# 1. Generate SUPERADMIN token
+  TOKEN=$(curl -s -X POST http://localhost:3000/api/test/generate-token \
+    -H "Content-Type: application/json" \
+    -d '{"role":"SUPERADMIN"}' | jq -r '.token')
+
+  # 2. Use it to register a new user
+  curl -X POST http://localhost:3000/api/auth/register \
+    -H "Authorization: Bearer $TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+      "email": "newuser@test.com",
+      "password": "Password123",
+      "name": "New User",
+      "role": "ADMIN"
+    }'
