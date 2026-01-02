@@ -131,6 +131,27 @@ services:
       retries: 5
     restart: unless-stopped
 
+  # Subscription Service Database
+  postgres-subscription:
+    image: postgres:15-alpine
+    container_name: postgres-subscription
+    environment:
+      POSTGRES_DB: ${SUBSCRIPTION_DB_NAME:-subscripption}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
+    ports:
+      - "5438:5432"
+    volumes:
+      - postgres-subscription-data:/var/lib/postgresql/data
+    networks:
+      - reelapp-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   # ========================================
   # MICROSERVICES
   # ========================================
@@ -222,6 +243,7 @@ services:
       USER_SERVICE_URL: http://user-service:8089
       VIDEO_SERVICE_URL: http://video-service:8087
       PERMISSION_SERVICE_URL: http://permission-service:8085
+      SUBSCRIPTION_SERVICE_URL: http://subscription-service:8086
 
       # Server Configuration
       SERVER_PORT: 3000
@@ -388,6 +410,39 @@ services:
       retries: 3
       start_period: 60s
 
+  # Subscription Service
+  subscription-service:
+    build:
+      context: ./Saanvitechs-RA_subscriptionAPI
+      dockerfile: Dockerfile
+    container_name: subscription-service
+    ports:
+      - "${SUBSCRIPTION_PORT:-8086}:8086"
+    environment:
+      # Database Configuration
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-subscription:5432/${SUBSCRIPTION_DB_NAME:-subscripption}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-root}
+
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: ${SHOW_SQL:-false}
+
+      # Server Configuration
+      SERVER_PORT: 8086
+    depends_on:
+      postgres-subscription:
+        condition: service_healthy
+    networks:
+      - reelapp-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8086/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
 # ========================================
 # NETWORKS
 # ========================================
@@ -412,6 +467,8 @@ volumes:
     name: reelapp-postgres-permission-data
   postgres-playback-data:
     name: reelapp-postgres-playback-data
+  postgres-subscription-data:
+    name: reelapp-postgres-subscription-data
   video-storage:
     name: reelapp-video-storage
   playback-video-storage:
