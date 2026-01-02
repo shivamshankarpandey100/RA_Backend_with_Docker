@@ -152,6 +152,27 @@ services:
       retries: 5
     restart: unless-stopped
 
+  # Transcoding Service Database
+  postgres-transcoding:
+    image: postgres:15-alpine
+    container_name: postgres-transcoding
+    environment:
+      POSTGRES_DB: ${TRANSCODING_DB_NAME:-transcoding}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
+    ports:
+      - "5439:5432"
+    volumes:
+      - postgres-transcoding-data:/var/lib/postgresql/data
+    networks:
+      - reelapp-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   # ========================================
   # MICROSERVICES
   # ========================================
@@ -244,6 +265,7 @@ services:
       VIDEO_SERVICE_URL: http://video-service:8087
       PERMISSION_SERVICE_URL: http://permission-service:8085
       SUBSCRIPTION_SERVICE_URL: http://subscription-service:8086
+      TRANSCODING_SERVICE_URL: http://transcoding-service:8090
 
       # Server Configuration
       SERVER_PORT: 3000
@@ -443,6 +465,48 @@ services:
       retries: 3
       start_period: 60s
 
+  # Transcoding Service
+  transcoding-service:
+    build:
+      context: ./RA_Transcoding
+      dockerfile: Dockerfile
+    container_name: transcoding-service
+    ports:
+      - "${TRANSCODING_PORT:-8090}:8090"
+    environment:
+      # Database Configuration
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-transcoding:5432/${TRANSCODING_DB_NAME:-transcoding}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-root}
+
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: ${SHOW_SQL:-false}
+
+      # File Upload Configuration
+      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: 10GB
+      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: 10GB
+
+      # Video Storage Path
+      VIDEO_STORAGE_PATH: /app/transcoded
+
+      # Server Configuration
+      SERVER_PORT: 8090
+    depends_on:
+      postgres-transcoding:
+        condition: service_healthy
+    volumes:
+      - transcoding-video-storage:/app/transcoded
+    networks:
+      - reelapp-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8090/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
 # ========================================
 # NETWORKS
 # ========================================
@@ -469,7 +533,11 @@ volumes:
     name: reelapp-postgres-playback-data
   postgres-subscription-data:
     name: reelapp-postgres-subscription-data
+  postgres-transcoding-data:
+    name: reelapp-postgres-transcoding-data
   video-storage:
     name: reelapp-video-storage
   playback-video-storage:
     name: reelapp-playback-video-storage
+  transcoding-video-storage:
+    name: reelapp-transcoding-video-storage
